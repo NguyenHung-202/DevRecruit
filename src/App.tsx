@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Plus, Search } from 'lucide-react';
+import { Plus, Search, FileSpreadsheet } from 'lucide-react';
 import { JobModal } from './components/JobModal';
 import { JobTable } from './components/JobTable';
 import { JobStats } from './components/JobStats';
 import { ToastContainer, type ToastMessage } from './components/Toast';
 import { ThemeToggle } from './components/ThemeToggle';
+import { exportJobsToExcel } from './utils/exportExcel';
 import type { AppDispatch, RootState } from './store/store';
 import type { Job, JobStatus } from './types/job';
 import { deleteJobAsync, fetchJobs, updateJobStatus } from './store/slices/jobSlice';
@@ -132,18 +133,29 @@ function App() {
           <h1 className="h3 mb-0">Danh sách Ứng tuyển</h1>
           <ThemeToggle />
         </div>
-        <button
-          type="button"
-          className="btn btn-primary d-inline-flex align-items-center gap-2"
-          onClick={() => {
-            setEditingJob(null);
-            setShowAddModal(true);
-          }}
-          disabled={status !== 'succeeded'}
-        >
-          <Plus size={18} aria-hidden />
-          Thêm ứng tuyển
-        </button>
+        <div className="d-flex gap-2">
+          <button
+            type="button"
+            className="btn btn-outline-success d-inline-flex align-items-center gap-2"
+            onClick={() => exportJobsToExcel(items)}
+            disabled={items.length === 0}
+          >
+            <FileSpreadsheet size={18} aria-hidden />
+            Xuất Excel
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary d-inline-flex align-items-center gap-2"
+            onClick={() => {
+              setEditingJob(null);
+              setShowAddModal(true);
+            }}
+            disabled={status !== 'succeeded'}
+          >
+            <Plus size={18} aria-hidden />
+            Thêm ứng tuyển
+          </button>
+        </div>
       </div>
 
       <JobModal
