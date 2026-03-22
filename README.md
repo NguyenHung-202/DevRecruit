@@ -1,70 +1,79 @@
-# DevRecruit - Quản lý Ứng tuyển Công việc 🚀
+# DevRecruit - Quản lý Ứng tuyển Công việc chuyên nghiệp 🚀
 
-DevRecruit là một ứng dụng web hiện đại giúp các lập trình viên theo dõi và quản lý quá trình ứng tuyển công việc một cách hiệu quả. Với giao diện trực quan, tính năng Dark Mode và tối ưu hóa hiệu năng, ứng dụng mang lại trải nghiệm người dùng tuyệt vời trên cả máy tính và điện thoại.
+**DevRecruit** là một ứng dụng Dashboard hiện đại giúp các lập trình viên theo dõi, quản lý và phân tích quá trình ứng tuyển công việc một cách khoa học. Ứng dụng không chỉ là nơi lưu trữ dữ liệu mà còn là một công cụ phân tích hiệu quả giúp bạn tối ưu hóa hành trình tìm việc.
+
+🔗 **Live Demo**: [https://dev-recruit-gold.vercel.app/](https://dev-recruit-gold.vercel.app/)
 
 ---
 
-## ✨ Các tính năng chính
+## ✨ Các tính năng nổi bật
 
-- **Quản lý Ứng tuyển (CRUD)**: Thêm mới, chỉnh sửa và xóa thông tin các công ty bạn đã ứng tuyển.
-- **Theo dõi Trạng thái**: Cập nhật nhanh trạng thái (Đang chờ, Phỏng vấn, Đã nhận, Từ chối) ngay trên bảng.
-- **Tìm kiếm & Lọc**: Tìm nhanh theo tên công ty hoặc lọc danh sách theo trạng thái ứng tuyển.
-- **Dark Mode**: Chế độ giao diện tối giúp bảo vệ mắt và tiết kiệm pin, tự động lưu lựa chọn người dùng.
-- **Responsive Design**: Giao diện tự động chuyển sang dạng Card trên điện thoại, đảm bảo hiển thị thông tin rõ ràng nhất.
-- **Thông báo Toast**: Phản hồi tức thì cho người dùng khi thực hiện các hành động (Thêm/Sửa/Xóa thành công).
-- **Empty State**: Giao diện thân thiện khi chưa có dữ liệu, hướng dẫn người dùng bắt đầu.
+### 📊 1. Hệ thống Thống kê Thông minh (Analytics Dashboard)
+- Tự động tổng hợp dữ liệu ngay khi có thay đổi (Thêm/Sửa/Xóa).
+- Theo dõi các chỉ số quan trọng: Tổng số đơn, Đang chờ, Phỏng vấn, Đã nhận và Từ chối.
+- **Tỉ lệ thành công (%)**: Chỉ số quan trọng nhất giúp đánh giá chất lượng CV và chiến thuật rải đơn.
+
+### 📥 2. Xuất Báo cáo Excel chuyên nghiệp
+- Trích xuất toàn bộ danh sách ứng tuyển ra file `.xlsx` chỉ với một cú click.
+- Tự động chuẩn hóa dữ liệu sang Tiếng Việt, loại bỏ mã kỹ thuật và định dạng cột đẹp mắt.
+- Tên file thông minh kèm theo ngày tháng xuất báo cáo (ví dụ: `Bao_cao_ung_tuyen_23_03_2026.xlsx`).
+
+### 🌓 3. Chế độ Tối (Dark Mode) & Trải nghiệm người dùng
+- Giao diện Dark Mode chuyên nghiệp, bảo vệ mắt và tiết kiệm pin.
+- Tự động lưu lựa chọn theme vào `localStorage` và nhận diện cài đặt hệ thống.
+- Hệ thống **Thông báo Toast** (Bootstrap) phản hồi tức thì cho mọi hành động.
+
+### 📱 4. Giao diện Responsive (Mobile-first)
+- Bảng dữ liệu tự động chuyển sang dạng **Card-view** trên điện thoại.
+- Đảm bảo trải nghiệm mượt mà, dễ dàng thao tác trên mọi kích thước màn hình.
+
+### 🛠 5. Chất lượng mã nguồn cao
+- **100% TypeScript**: Kiểm soát kiểu dữ liệu chặt chẽ, không sử dụng `any`.
+- **Clean Code**: Mã nguồn sạch sẽ, có chú thích Tiếng Việt chi tiết cho các hàm phức tạp.
+- **Tối ưu hiệu năng**: Sử dụng `React.memo`, `useMemo`, `useCallback` để đạt tốc độ phản hồi nhanh nhất.
 
 ---
 
 ## 🛠 Tech Stack
 
-Ứng dụng được xây dựng với các công nghệ hiện đại nhất:
-
-- **Frontend Framework**: [React 19](https://react.dev/)
+- **Frontend**: [React 19](https://react.dev/)
 - **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
-- **Programming Language**: [TypeScript](https://www.typescriptlang.org/) (Đảm bảo an toàn kiểu dữ liệu, không sử dụng `any`)
-- **Build Tool**: [Vite](https://vitejs.dev/)
 - **Styling**: [Bootstrap 5](https://getbootstrap.com/) & CSS Variables
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **HTTP Client**: [Axios](https://axios-http.com/)
+- **Data Handling**: [Axios](https://axios-http.com/), [XLSX](https://sheetjs.com/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
 
 ---
 
-## 🚀 Hướng dẫn chạy ứng dụng
+## 🚀 Hướng dẫn khởi chạy
 
-Để khởi chạy dự án trên máy tính cá nhân, hãy thực hiện theo các bước sau:
-
-### 1. Cài đặt các phụ thuộc
-Đảm bảo bạn đã cài đặt Node.js, sau đó chạy lệnh:
+### 1. Cài đặt các thư viện
 ```bash
 npm install
 ```
 
-### 2. Khởi chạy ở chế độ Phát triển (Development)
-Chạy lệnh sau để khởi động server cục bộ:
+### 2. Chạy ở chế độ Phát triển (Development)
 ```bash
 npm run dev
 ```
-Sau đó, truy cập vào đường dẫn hiển thị trên terminal (thường là `http://localhost:5173`).
+Mặc định ứng dụng sẽ chạy tại: `http://localhost:5173`
 
-### 3. Xây dựng cho sản phẩm (Production)
-Để tối ưu hóa và đóng gói ứng dụng:
+### 3. Đóng gói cho sản phẩm (Production)
 ```bash
 npm run build
 ```
 
 ---
 
-## 📈 Tối ưu hóa hiệu năng
+## 📈 Kết quả tối ưu hóa (Lighthouse)
 
-Ứng dụng đã được tối ưu hóa để đạt điểm số cao trên Lighthouse:
-- **React.memo**: Ngăn chặn re-render không cần thiết cho các component hiển thị.
-- **useMemo & useCallback**: Tối ưu hóa logic tính toán và giữ nguyên tham chiếu hàm.
-- **Tree-shaking**: Tối ưu hóa việc import icons để giảm kích thước bundle.
-- **CSS Variables**: Chuyển đổi theme mượt mà không cần render lại toàn bộ DOM.
+Dự án được tối ưu hóa để đạt điểm số cao trên Chrome DevTools:
+- **Performance**: Render mượt mà nhờ ngăn chặn re-render thừa.
+- **Best Practices**: Cấu trúc thư mục chuẩn, sử dụng Tree-shaking cho Icons.
+- **Accessibility**: Đầy đủ các thuộc tính ARIA và hỗ trợ bàn phím.
 
 ---
 
 ## 👨‍💻 Phát triển bởi
 
-Dự án được thực hiện với tiêu chuẩn mã nguồn sạch, có chú thích đầy đủ bằng tiếng Việt để dễ dàng bảo trì và mở rộng.
+Dự án được xây dựng với tư duy hướng sản phẩm, sẵn sàng để tích hợp vào các hệ thống quản lý nhân sự hoặc dùng làm dự án tiêu biểu trong CV cá nhân.
