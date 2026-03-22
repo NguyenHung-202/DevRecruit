@@ -191,6 +191,28 @@ body {
   border-color: var(--border-color);
 }
 
+.bg-purple {
+  background-color: #a855f7 !important;
+}
+
+.text-purple {
+  color: #a855f7 !important;
+}
+
+.border-purple {
+  border-color: #a855f7 !important;
+}
+
+.bg-opacity-10 {
+  --bs-bg-opacity: 0.1;
+}
+
+.rounded-bg-light {
+  background-color: var(--bg-header);
+  border-radius: 8px;
+  padding: 8px;
+}
+
 .card-body {
   background-color: var(--bg-card);
   color: var(--text-main);

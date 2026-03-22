@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Plus, Search } from 'lucide-react';
 import { JobModal } from './components/JobModal';
 import { JobTable } from './components/JobTable';
+import { JobStats } from './components/JobStats';
 import { ToastContainer, type ToastMessage } from './components/Toast';
 import { ThemeToggle } from './components/ThemeToggle';
 import type { AppDispatch, RootState } from './store/store';
@@ -160,6 +161,8 @@ function App() {
 
       {status === 'succeeded' && (
         <>
+          <JobStats jobs={items} />
+          
           <div className="card border-0 shadow-sm mb-3">
             <div className="card-body py-3">
               <div className="row g-3 align-items-center">
