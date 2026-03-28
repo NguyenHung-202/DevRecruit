@@ -3,10 +3,9 @@ import {
   Briefcase,
   Building2,
   CalendarDays,
-  Pencil,
-  Tag,
-  Trash2,
   ClipboardList,
+  Star,
+  Tag,
 } from 'lucide-react';
 import type { Job, JobStatus } from '../types/job';
 
@@ -45,6 +44,8 @@ export interface JobTableProps {
   onEdit?: (job: Job) => void;
   onDelete?: (job: Job) => void;
   onStatusChange?: (id: string, status: JobStatus) => void;
+  onToggleFavorite?: (id: string) => void;
+  onViewDetails?: (job: Job) => void;
 }
 
 const iconCellClass = 'text-body-secondary me-2';
@@ -57,10 +58,9 @@ const headerIconClass = 'text-primary me-2';
 export const JobTable = memo(function JobTable({
   jobs,
   patchingJobId,
-  deletingJobId,
-  onEdit,
-  onDelete,
   onStatusChange,
+  onToggleFavorite,
+  onViewDetails,
 }: JobTableProps) {
   return (
     <div className="table-responsive shadow-sm rounded border">
@@ -108,7 +108,16 @@ export const JobTable = memo(function JobTable({
               <tr key={job.id}>
                 <td data-label="Công ty">
                   <Building2 size={16} className={iconCellClass} aria-hidden />
-                  {job.companyName}
+                  <button
+                    type="button"
+                    className="btn btn-link p-0 text-decoration-none fw-semibold text-primary"
+                    onClick={() => onViewDetails?.(job)}
+                  >
+                    {job.companyName}
+                  </button>
+                  {job.isFavorite && (
+                    <Star size={14} className="ms-2 text-warning fill-warning" />
+                  )}
                 </td>
                 <td data-label="Vị trí">
                   <Briefcase size={16} className={iconCellClass} aria-hidden />
@@ -144,22 +153,18 @@ export const JobTable = memo(function JobTable({
                 <td className="text-end text-nowrap">
                   <button
                     type="button"
-                    className="btn btn-sm btn-outline-primary me-1"
-                    onClick={() => onEdit?.(job)}
-                    aria-label={`Sửa ${job.companyName}`}
+                    className={`btn btn-sm ${
+                      job.isFavorite ? 'btn-warning' : 'btn-outline-warning'
+                    }`}
+                    onClick={() => onToggleFavorite?.(job.id)}
+                    aria-label={`Yêu thích ${job.companyName}`}
+                    title="Đánh dấu yêu thích (Tối đa 3)"
                   >
-                    <Pencil size={16} className="me-1" aria-hidden />
-                    Sửa
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={() => onDelete?.(job)}
-                    disabled={deletingJobId === job.id}
-                    aria-label={`Xóa ${job.companyName}`}
-                  >
-                    <Trash2 size={16} className="me-1" aria-hidden />
-                    Xóa
+                    <Star
+                      size={16}
+                      className={job.isFavorite ? 'fill-current' : ''}
+                      aria-hidden
+                    />
                   </button>
                 </td>
               </tr>

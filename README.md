@@ -1,4 +1,4 @@
-# DevRecruit - Quản lý Ứng tuyển Công việc chuyên nghiệp 🚀
+# DevRecruit - Quản lý Ứng tuyển Công việc 🚀
 
 **DevRecruit** là một ứng dụng Dashboard hiện đại giúp các lập trình viên theo dõi, quản lý và phân tích quá trình ứng tuyển công việc một cách khoa học. Ứng dụng không chỉ là nơi lưu trữ dữ liệu mà còn là một công cụ phân tích hiệu quả giúp bạn tối ưu hóa hành trình tìm việc.
 

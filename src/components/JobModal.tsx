@@ -23,6 +23,8 @@ const emptyForm = (): NewJobPayload => ({
   salaryExpectation: '',
   note: '',
   linkJD: '',
+  expiryDate: '',
+  interviewDate: '',
 });
 
 export interface JobModalProps {
@@ -60,6 +62,8 @@ export const JobModal = memo(function JobModal({ show, onHide, onSuccess, job }:
         salaryExpectation: job.salaryExpectation || '',
         note: job.note || '',
         linkJD: job.linkJD || '',
+        expiryDate: job.expiryDate || '',
+        interviewDate: job.interviewDate || '',
       });
     } else {
       setForm(emptyForm());
@@ -105,6 +109,8 @@ export const JobModal = memo(function JobModal({ show, onHide, onSuccess, job }:
       salaryExpectation: form.salaryExpectation?.trim() || undefined,
       note: form.note?.trim() || undefined,
       linkJD: form.linkJD?.trim() || undefined,
+      expiryDate: form.expiryDate?.trim() || undefined,
+      interviewDate: form.interviewDate?.trim() || undefined,
     };
 
     try {
@@ -247,6 +253,32 @@ export const JobModal = memo(function JobModal({ show, onHide, onSuccess, job }:
                       className="form-control"
                       value={form.linkJD ?? ''}
                       onChange={update('linkJD')}
+                      disabled={addSubmitting}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor={`${formId}-expiry`} className="form-label">
+                      Hạn ứng tuyển
+                    </label>
+                    <input
+                      id={`${formId}-expiry`}
+                      type="date"
+                      className="form-control"
+                      value={form.expiryDate ?? ''}
+                      onChange={update('expiryDate')}
+                      disabled={addSubmitting}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label htmlFor={`${formId}-interview`} className="form-label">
+                      Lịch phỏng vấn
+                    </label>
+                    <input
+                      id={`${formId}-interview`}
+                      type="date"
+                      className="form-control"
+                      value={form.interviewDate ?? ''}
+                      onChange={update('interviewDate')}
                       disabled={addSubmitting}
                     />
                   </div>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Plus, Search, FileSpreadsheet } from 'lucide-react';
+import { Plus, Search, FileSpreadsheet, MessageSquare } from 'lucide-react';
 import { JobModal } from './components/JobModal';
 import { JobTable } from './components/JobTable';
 import { JobStats } from './components/JobStats';
@@ -9,7 +9,8 @@ import { ThemeToggle } from './components/ThemeToggle';
 import { exportJobsToExcel } from './utils/exportExcel';
 import type { AppDispatch, RootState } from './store/store';
 import type { Job, JobStatus } from './types/job';
-import { deleteJobAsync, fetchJobs, updateJobStatus } from './store/slices/jobSlice';
+import { deleteJobAsync, fetchJobs, updateJobStatus, toggleFavoriteJob } from './store/slices/jobSlice';
+import { JobDetailModal } from './components/JobDetailModal';
 
 type StatusFilterTab = 'all' | 'Pending' | 'Accepted' | 'Rejected';
 
@@ -30,6 +31,7 @@ function App() {
   const [companySearch, setCompanySearch] = useState('');
   const [statusTab, setStatusTab] = useState<StatusFilterTab>('all');
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
+  const [detailJob, setDetailJob] = useState<Job | null>(null);
 
   /**
    * Thêm một thông báo Toast mới vào danh sách.
@@ -52,10 +54,17 @@ function App() {
    */
   const filteredJobs = useMemo(() => {
     const q = companySearch.trim().toLowerCase();
-    return items.filter((job) => {
+    const filtered = items.filter((job) => {
       if (statusTab !== 'all' && job.status !== statusTab) return false;
       if (!q) return true;
       return job.companyName.toLowerCase().includes(q);
+    });
+
+    // Sắp xếp: Yêu thích lên đầu
+    return [...filtered].sort((a, b) => {
+      if (a.isFavorite && !b.isFavorite) return -1;
+      if (!a.isFavorite && b.isFavorite) return 1;
+      return 0;
     });
   }, [items, companySearch, statusTab]);
 
@@ -126,6 +135,27 @@ function App() {
     [dispatch, addToast]
   );
 
+  /**
+   * Xử lý toggle yêu thích
+   */
+  const handleToggleFavorite = useCallback(
+    (id: string) => {
+      void dispatch(toggleFavoriteJob(id))
+        .unwrap()
+        .catch((error: string) => {
+          addToast(error || 'Lỗi khi cập nhật yêu thích', 'danger');
+        });
+    },
+    [dispatch, addToast]
+  );
+
+  /**
+   * Mở chi tiết công việc
+   */
+  const handleViewDetails = useCallback((job: Job) => {
+    setDetailJob(job);
+  }, []);
+
   return (
     <div className="container py-5">
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
@@ -162,7 +192,7 @@ function App() {
         show={showAddModal}
         onHide={handleCloseModal}
         job={editingJob}
-        onSuccess={(msg) => addToast(msg, 'success')}
+        onSuccess={(msg: string) => addToast(msg, 'success')}
       />
 
       <ToastContainer toasts={toasts} onClose={removeToast} />
@@ -173,6 +203,31 @@ function App() {
 
       {status === 'succeeded' && (
         <>
+          {items.some(j => j.interviewDate && new Date(j.interviewDate).getTime() >= new Date().setHours(0,0,0,0) && j.status === 'Interviewing') && (
+            <div className="alert alert-info border-0 shadow-sm d-flex align-items-center gap-3 mb-4">
+              <div className="p-2 bg-info text-white rounded-circle shadow-sm">
+                <MessageSquare size={20} />
+              </div>
+              <div className="flex-grow-1">
+                <h4 className="h6 mb-1 fw-bold">Nhắc nhở lịch phỏng vấn</h4>
+                <div className="d-flex flex-wrap gap-2">
+                  {items
+                    .filter(j => j.interviewDate && new Date(j.interviewDate).getTime() >= new Date().setHours(0,0,0,0) && j.status === 'Interviewing')
+                    .map(j => (
+                      <button 
+                        key={j.id} 
+                        className="btn btn-sm btn-light border py-1 px-2 rounded d-inline-flex align-items-center gap-1"
+                        onClick={() => handleViewDetails(j)}
+                      >
+                        <span className="fw-semibold text-primary">{j.companyName}</span>: {new Date(j.interviewDate!).toLocaleDateString('vi-VN')}
+                      </button>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          )}
+          
           <JobStats jobs={items} />
           
           <div className="card border-0 shadow-sm mb-3">
@@ -232,6 +287,17 @@ function App() {
             onEdit={handleEdit}
             onDelete={handleDelete}
             onStatusChange={handleStatusChange}
+            onToggleFavorite={handleToggleFavorite}
+            onViewDetails={handleViewDetails}
+          />
+
+          <JobDetailModal
+            show={!!detailJob}
+            onHide={() => setDetailJob(null)}
+            job={detailJob}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onSuccess={(msg: string) => addToast(msg, 'success')}
           />
         </>
       )}

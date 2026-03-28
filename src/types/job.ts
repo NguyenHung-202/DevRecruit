@@ -9,4 +9,7 @@ export interface Job {
   salaryExpectation?: string;
   note?: string;
   linkJD?: string;
+  isFavorite?: boolean;
+  expiryDate?: string;
+  interviewDate?: string;
 }
